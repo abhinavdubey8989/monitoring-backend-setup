@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  my-statsd:
+    image: statsd/statsd
+    container_name: my-statsd
+    tty: true
+    ports:
+      - "8125:8125/udp"
+    volumes:
+      - ./config.js:/usr/src/app/config.js
+      - ./console.js:/usr/src/app/backends/console.js

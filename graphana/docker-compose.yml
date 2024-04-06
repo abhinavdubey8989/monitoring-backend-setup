@@ -1,0 +1,12 @@
+
+
+version: '3'
+  
+services:
+  my-grafana:
+    image: grafana/grafana:7.0.0
+    ports:
+      - "3000:3000"
+    environment:
+        - GF_SECURITY_ADMIN_PASSWORD=password
+

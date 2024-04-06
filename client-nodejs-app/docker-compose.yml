@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  node-server-1-statsd:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        CACHEBUST: ${CACHEBUST:-1}
+    container_name: node-server-1-statsd
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - SERVER_ID=server_1 #this is extra over .env file
+      - STATSD_HOST=host.docker.internal #this will over-write the .env key , this is done to point to statsd container (else we need to update .env)
+    ports:
+      - 3033:${APP_PORT}  #binding b/w host-port & container-port
+    networks:
+      - my-bridge-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  node-server-2-statsd:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        CACHEBUST: ${CACHEBUST:-1}
+    container_name: node-server-2-statsd
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - SERVER_ID=server_2
+      - STATSD_HOST=host.docker.internal
+    ports:
+      - 4033:${APP_PORT}
+    networks:
+      - my-bridge-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  my-bridge-network:
+    driver: bridge
