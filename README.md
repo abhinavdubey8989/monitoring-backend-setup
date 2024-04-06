@@ -27,8 +27,8 @@
 
 
 # directory of counters stored in graphite
-- stats_count.server_<id>.<metric>
+- stats_count.server_id.metric
 
 
 # directory of timers stored in graphite
-- stats.server_<id>.<metric>
+- stats.server_id.metric
